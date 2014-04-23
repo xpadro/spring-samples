@@ -8,5 +8,10 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	
+	<!-- Detects @Endpoint since it is a specialization of @Component -->
+	<context:component-scan base-package="xpadro.spring.ws.courses"/>
+	
+	<!-- detects @PayloadRoot -->
+	<ws:annotation-driven/>
 	
 </beans>
