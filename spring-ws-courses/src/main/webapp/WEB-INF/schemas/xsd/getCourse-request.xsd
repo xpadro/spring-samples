@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.xpadro.spring.samples.com/courses" xmlns:courses="http://www.xpadro.spring.samples.com/courses">
+  <xs:element name="getCourseRequest">
+    <xs:complexType>
+      <xs:attribute name="courseId" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

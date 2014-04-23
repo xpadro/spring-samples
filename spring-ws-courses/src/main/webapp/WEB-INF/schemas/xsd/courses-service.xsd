@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="http://www.xpadro.spring.samples.com/courses"
+	xmlns:courses="http://www.xpadro.spring.samples.com/courses">
+
+	<xs:element name="getCourseRequest">
+		<xs:complexType>
+			<xs:attribute name="courseId" use="required" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getCourseResponse">
+		<xs:complexType>
+			<xs:attribute name="courseId" use="required" type="xs:string" />
+			<xs:attribute name="description" use="required" type="xs:string" />
+			<xs:attribute name="name" use="required" type="xs:string" />
+			<xs:attribute name="subscriptors" use="required" type="xs:integer" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getCourseListRequest">
+		<xs:complexType />
+	</xs:element>
+
+	<xs:element name="getCourseListResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="courses:course" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="course">
+		<xs:complexType>
+			<xs:attribute name="courseId" use="required" type="xs:NCName" />
+			<xs:attribute name="description" use="required" type="xs:string" />
+			<xs:attribute name="name" use="required" type="xs:string" />
+			<xs:attribute name="subscriptors" use="required" type="xs:integer" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getLastUserRequest">
+		<xs:complexType />
+	</xs:element>
+
+	<xs:element name="getLastUserResponse">
+		<xs:complexType>
+			<xs:attribute name="userId" use="required" type="xs:integer" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

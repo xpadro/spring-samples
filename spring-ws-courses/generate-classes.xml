@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project name="Ant-Generate-Classes-With-JAXB2" default="generate" basedir=".">
+	<property name="src.dir" location="src/main/webapp" />
+	<property name="java.dir" location="src/main/java" />
+	<property name="schema.dir" location="${src.dir}/WEB-INF/schemas/xsd" />
+
+	<target name="generate">
+		<exec executable="xjc">
+			<arg line=" -d ${java.dir} -p xpadro.spring.ws.courses.types ${schema.dir}/courses-service.xsd" />
+		</exec>
+	</target>
+</project>

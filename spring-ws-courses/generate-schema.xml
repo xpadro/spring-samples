@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project name="Ant-Generate-Schema-With-Trang" default="generate" basedir=".">
+	<property name="src.dir" location="src/main/webapp" />
+	<property name="trang.dir" location="${src.dir}/WEB-INF/lib" />
+	<property name="source.dir" location="${src.dir}/WEB-INF/schemas/samples" />
+	<property name="schema.dir" location="${src.dir}/WEB-INF/schemas/xsd" />
+
+	<target name="generate" description="generates courses schema">
+		<delete dir="${schema.dir}" />
+		<mkdir dir="${schema.dir}" />
+
+		<java jar="${trang.dir}/trang.jar" fork="true">
+			<arg value="${source.dir}/getCourse-request.xml" />
+			<arg value="${schema.dir}/getCourse-request.xsd" />
+		</java>
+
+		<java jar="${trang.dir}/trang.jar" fork="true">
+			<arg value="${source.dir}/getCourse-response.xml" />
+			<arg value="${schema.dir}/getCourse-response.xsd" />
+		</java>
+		
+		<java jar="${trang.dir}/trang.jar" fork="true">
+			<arg value="${source.dir}/getCourseList-request.xml" />
+			<arg value="${schema.dir}/getCourseList-request.xsd" />
+		</java>
+
+		<java jar="${trang.dir}/trang.jar" fork="true">
+			<arg value="${source.dir}/getCourseList-response.xml" />
+			<arg value="${schema.dir}/getCourseList-response.xsd" />
+		</java>
+		
+		<java jar="${trang.dir}/trang.jar" fork="true">
+			<arg value="${source.dir}/getLastUser-request.xml" />
+			<arg value="${schema.dir}/getLastUser-request.xsd" />
+		</java>
+
+		<java jar="${trang.dir}/trang.jar" fork="true">
+			<arg value="${source.dir}/getLastUser-response.xml" />
+			<arg value="${schema.dir}/getLastUser-response.xsd" />
+		</java>
+	</target>
+</project>

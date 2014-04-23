@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<getCourseResponse xmlns="http://www.xpadro.spring.samples.com/courses" 
+	courseId="BC-45"
+	name="Introduction to Java"
+	description="An introduction to Java"
+	subscriptors="25" />

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<getCourseRequest xmlns="http://www.xpadro.spring.samples.com/courses"
+	courseId="BC-45" />
