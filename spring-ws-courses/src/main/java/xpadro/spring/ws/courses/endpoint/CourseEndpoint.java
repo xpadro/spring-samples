@@ -1,13 +1,17 @@
 package xpadro.spring.ws.courses.endpoint;
 
 import java.math.BigInteger;
+import java.util.Map;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import xpadro.spring.ws.courses.service.CourseService;
+import xpadro.spring.ws.courses.service.exception.CourseNotFoundException;
 import xpadro.spring.ws.courses.types.Course;
 import xpadro.spring.ws.courses.types.GetCourseListRequest;
 import xpadro.spring.ws.courses.types.GetCourseListResponse;
@@ -19,33 +23,45 @@ import xpadro.spring.ws.courses.types.GetLastUserResponse;
 @Endpoint
 public class CourseEndpoint {
 	private static final String NAMESPACE = "http://www.xpadro.spring.samples.com/courses";
-
-	/**
-	 * Used by Spring Integration sample to test a correct invocation to the web service
-	 * @param request
-	 * @return
-	 */
-	@PayloadRoot(localPart="getCourseRequest", namespace=NAMESPACE)
-	public @ResponsePayload GetCourseResponse getCourse(@RequestPayload GetCourseRequest request) {
-		GetCourseResponse response = new GetCourseResponse();
-		response.setCourseId("BC-45");
-		response.setDescription("An introduction to Java");
-		response.setName("Introduction to Java");
-		response.setSubscriptors(new BigInteger("25"));
-		
-		return response;
-	}
+	
+	@Autowired
+	private CourseService service;
 	
 	/**
 	 * Used by Spring Integration sample to test configuring a timeout
 	 * @param request
 	 * @return
-	 * @throws InterruptedException 
+	 */
+	@PayloadRoot(localPart="getCourseRequest", namespace=NAMESPACE)
+	public @ResponsePayload GetCourseResponse getCourse(@RequestPayload GetCourseRequest request) {
+		Course course = service.getCourse(request.getCourseId());
+		
+		if (course == null) {
+			throw new CourseNotFoundException("course [" + request.getCourseId() + "] does not exist");
+		}
+		
+		GetCourseResponse response = new GetCourseResponse();
+		response.setCourseId(course.getCourseId());
+		response.setDescription(course.getDescription());
+		response.setName(course.getName());
+		response.setSubscriptors(course.getSubscriptors());
+		
+		return response;
+	}
+	
+	/**
+	 * Used by Spring Integration sample to test a correct invocation to the web service
+	 * @param request
+	 * @return
 	 */
 	@PayloadRoot(localPart="getCourseListRequest", namespace=NAMESPACE)
-	public @ResponsePayload GetCourseListResponse getCourseList(@RequestPayload GetCourseListRequest request) throws InterruptedException {
-		Thread.sleep(4000);   //sleep to let the client test timeout
-		return getDummyCourseList();
+	public @ResponsePayload GetCourseListResponse getCourseList(@RequestPayload GetCourseListRequest request) {
+		GetCourseListResponse response = new GetCourseListResponse();
+		for (Map.Entry<String, Course> entry : service.getCourses().entrySet()) {
+			response.getCourse().add(entry.getValue());
+		}
+		
+		return response;
 	}
 	
 	/**
@@ -60,26 +76,6 @@ public class CourseEndpoint {
 		
 		GetLastUserResponse response = new GetLastUserResponse();
 		response.setUserId(new BigInteger(userId));
-		
-		return response;
-	}
-	
-	private GetCourseListResponse getDummyCourseList() {
-		GetCourseListResponse response = new GetCourseListResponse();
-		
-		Course course1 = new Course();
-		course1.setCourseId("BC-45");
-		course1.setDescription("An introduction to Java");
-		course1.setName("Introduction to Java");
-		course1.setSubscriptors(new BigInteger("25"));
-		response.getCourse().add(course1);
-		
-		Course course2 = new Course();
-		course2.setCourseId("DF-21");
-		course2.setDescription("Learn about functional programming");
-		course2.setName("Functional Programming Principles in Scala");
-		course2.setSubscriptors(new BigInteger("12"));
-		response.getCourse().add(course2);
 		
 		return response;
 	}

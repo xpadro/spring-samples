@@ -2,6 +2,7 @@ package xpadro.spring.ws.courses.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.client.SoapFaultClientException;
 
 import xpadro.spring.ws.courses.types.Course;
 import xpadro.spring.ws.courses.types.GetCourseListRequest;
@@ -30,7 +32,7 @@ public class TestCourseApp {
 	@Test
 	public void invokeGetCourseOperation() throws Exception {
 		GetCourseRequest request = new GetCourseRequest();
-		request.setCourseId("1");
+		request.setCourseId("BC-45");
 		
 		GetCourseResponse response = (GetCourseResponse) wsTemplate.marshalSendAndReceive(request);
 		
@@ -41,6 +43,15 @@ public class TestCourseApp {
 		assertEquals(new BigInteger("25", 10), response.getSubscriptors());
 	}
 	
+	@Test(expected=SoapFaultClientException.class)
+	public void invokeOnInvalidCourse() {
+		GetCourseRequest request = new GetCourseRequest();
+		request.setCourseId("non_existing_course");
+		
+		GetCourseResponse response = (GetCourseResponse) wsTemplate.marshalSendAndReceive(request);
+		assertNull(response);
+	}
+	
 	@Test
 	public void invokeGetCourseListOperation() {
 		GetCourseListRequest request = new GetCourseListRequest();
@@ -49,13 +60,6 @@ public class TestCourseApp {
 		assertNotNull(response);
 		List<Course> courses = response.getCourse();
 		assertEquals(2, courses.size());
-		Course course1 = courses.get(0);
-		assertNotNull(course1);
-		assertEquals("BC-45", course1.getCourseId());
-		
-		Course course2 = courses.get(1);
-		assertNotNull(course2);
-		assertEquals("DF-21", course2.getCourseId());
 	}
 	
 	@Test
