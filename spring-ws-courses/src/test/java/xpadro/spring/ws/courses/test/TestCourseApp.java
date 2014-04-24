@@ -20,8 +20,6 @@ import xpadro.spring.ws.courses.types.GetCourseListRequest;
 import xpadro.spring.ws.courses.types.GetCourseListResponse;
 import xpadro.spring.ws.courses.types.GetCourseRequest;
 import xpadro.spring.ws.courses.types.GetCourseResponse;
-import xpadro.spring.ws.courses.types.GetLastUserRequest;
-import xpadro.spring.ws.courses.types.GetLastUserResponse;
 
 @ContextConfiguration("classpath:xpadro/spring/ws/courses/test/config/test-config.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -60,12 +58,5 @@ public class TestCourseApp {
 		assertNotNull(response);
 		List<Course> courses = response.getCourse();
 		assertEquals(2, courses.size());
-	}
-	
-	@Test
-	public void invokeGetLastUserRegisteredOperation() {
-		GetLastUserRequest request = new GetLastUserRequest();
-		GetLastUserResponse response = (GetLastUserResponse) wsTemplate.marshalSendAndReceive(request);
-		assertNotNull(response);
 	}
 }

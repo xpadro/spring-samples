@@ -37,14 +37,4 @@
 			<xs:attribute name="subscriptors" use="required" type="xs:integer" />
 		</xs:complexType>
 	</xs:element>
-
-	<xs:element name="getLastUserRequest">
-		<xs:complexType />
-	</xs:element>
-
-	<xs:element name="getLastUserResponse">
-		<xs:complexType>
-			<xs:attribute name="userId" use="required" type="xs:integer" />
-		</xs:complexType>
-	</xs:element>
 </xs:schema>

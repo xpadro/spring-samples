@@ -1,8 +1,6 @@
 package xpadro.spring.ws.courses.endpoint;
 
-import java.math.BigInteger;
 import java.util.Map;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -17,8 +15,6 @@ import xpadro.spring.ws.courses.types.GetCourseListRequest;
 import xpadro.spring.ws.courses.types.GetCourseListResponse;
 import xpadro.spring.ws.courses.types.GetCourseRequest;
 import xpadro.spring.ws.courses.types.GetCourseResponse;
-import xpadro.spring.ws.courses.types.GetLastUserRequest;
-import xpadro.spring.ws.courses.types.GetLastUserResponse;
 
 @Endpoint
 public class CourseEndpoint {
@@ -27,11 +23,6 @@ public class CourseEndpoint {
 	@Autowired
 	private CourseService service;
 	
-	/**
-	 * Used by Spring Integration sample to test configuring a timeout
-	 * @param request
-	 * @return
-	 */
 	@PayloadRoot(localPart="getCourseRequest", namespace=NAMESPACE)
 	public @ResponsePayload GetCourseResponse getCourse(@RequestPayload GetCourseRequest request) {
 		Course course = service.getCourse(request.getCourseId());
@@ -49,33 +40,12 @@ public class CourseEndpoint {
 		return response;
 	}
 	
-	/**
-	 * Used by Spring Integration sample to test a correct invocation to the web service
-	 * @param request
-	 * @return
-	 */
 	@PayloadRoot(localPart="getCourseListRequest", namespace=NAMESPACE)
 	public @ResponsePayload GetCourseListResponse getCourseList(@RequestPayload GetCourseListRequest request) {
 		GetCourseListResponse response = new GetCourseListResponse();
 		for (Map.Entry<String, Course> entry : service.getCourses().entrySet()) {
 			response.getCourse().add(entry.getValue());
 		}
-		
-		return response;
-	}
-	
-	/**
-	 * Used by Spring Integration sample to test cacheable operations
-	 * @param request
-	 * @return
-	 */
-	@PayloadRoot(localPart="getLastUserRequest", namespace=NAMESPACE)
-	public @ResponsePayload GetLastUserResponse getLastUserRegistered(@RequestPayload GetLastUserRequest request) {
-		Random random = new Random();
-		String userId = String.valueOf(random.nextInt(100));
-		
-		GetLastUserResponse response = new GetLastUserResponse();
-		response.setUserId(new BigInteger(userId));
 		
 		return response;
 	}

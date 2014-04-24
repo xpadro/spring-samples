@@ -28,15 +28,5 @@
 			<arg value="${source.dir}/getCourseList-response.xml" />
 			<arg value="${schema.dir}/getCourseList-response.xsd" />
 		</java>
-		
-		<java jar="${trang.dir}/trang.jar" fork="true">
-			<arg value="${source.dir}/getLastUser-request.xml" />
-			<arg value="${schema.dir}/getLastUser-request.xsd" />
-		</java>
-
-		<java jar="${trang.dir}/trang.jar" fork="true">
-			<arg value="${source.dir}/getLastUser-response.xml" />
-			<arg value="${schema.dir}/getLastUser-response.xsd" />
-		</java>
 	</target>
 </project>
