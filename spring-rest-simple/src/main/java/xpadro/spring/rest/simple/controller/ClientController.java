@@ -15,7 +15,8 @@ public class ClientController {
 	private ClientService service;
 	
 	@RequestMapping(value="/{clientId}", method = RequestMethod.GET)
-	public String getProductName(@PathVariable String clientId) {
+	public String getProductNameWithDelay(@PathVariable String clientId) throws InterruptedException {
+		Thread.sleep(4000);
 		return service.getClientName(clientId);
 	}
 }
