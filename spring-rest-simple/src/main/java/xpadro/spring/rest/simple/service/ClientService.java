@@ -1,7 +1,9 @@
 package xpadro.spring.rest.simple.service;
 
+import xpadro.spring.rest.simple.model.Client;
+
 public interface ClientService {
 	
-	String getClientName(String id);
+	Client getClientName(String id);
 
 }
