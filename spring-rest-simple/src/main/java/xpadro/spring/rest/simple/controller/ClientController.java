@@ -17,10 +17,11 @@ public class ClientController {
 	private ClientService service;
 	
 	@RequestMapping(value="/{clientId}", method = RequestMethod.GET)
-	public @ResponseBody Client getProductNameWithDelay(@PathVariable String clientId) throws InterruptedException {
+	public @ResponseBody Client getClientWithDelay(@PathVariable String clientId) throws InterruptedException {
 		Thread.sleep(2000);
-		Client client = service.getClientName(clientId);
-		System.out.println("Returning client " + client.getName());
+		Client client = service.getClient(clientId);
+		System.out.println("Returning client " + client.getId());
+		
 		return client;
 	}
 }

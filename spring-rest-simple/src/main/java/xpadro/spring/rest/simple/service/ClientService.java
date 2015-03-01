@@ -4,6 +4,6 @@ import xpadro.spring.rest.simple.model.Client;
 
 public interface ClientService {
 	
-	Client getClientName(String id);
+	Client getClient(String id);
 
 }

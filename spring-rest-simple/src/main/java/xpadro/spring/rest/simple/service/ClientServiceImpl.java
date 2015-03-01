@@ -16,7 +16,7 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public Client getClientName(String id) {
+	public Client getClient(String id) {
 		return clients.get(id);
 	}
 	
